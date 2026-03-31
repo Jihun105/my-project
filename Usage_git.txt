@@ -1,0 +1,36 @@
+git bash 사용법 
+
+
+===처음 한 번만 설정
+git config --global user.name "이름"
+git config --global user.email "이메일"
+
+===폴더 이동, 만들기
+pwd              # 현재 내 위치 확인
+cd Desktop       # 바탕화면으로 이동
+mkdir my-project # 폴더 만들기
+cd my-project    # 폴더 안으로 이동
+
+git init         # 이 폴더를 Git으로 관리하겠다
+
+git status                    # 현재 상태 확인
+git add 파일명                 # 파일을 커밋 준비
+git commit -m "메모"           # 저장 (스냅샷 찍기)
+git log                       # 이력 확인
+
+git checkout 커밋ID            # 그 시점으로 이동
+git checkout master            # 다시 최신으로 돌아오기
+
+code .           # VS Code로 현재 폴더 열기
+
+
+===GitHub 연결 (처음 한 번만)
+git remote add origin https://github.com/아이디/저장소이름.git
+git branch -M main
+git push -u origin main
+
+git push          # 내 작업을 GitHub에 올리기
+git pull          # GitHub 내용을 내 컴퓨터로 당겨오기
+
+노트북에서 작업 → git add → git commit → git push
+컴퓨터에서     → git pull → 작업 → git add → git commit → git push
