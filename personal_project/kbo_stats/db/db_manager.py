@@ -29,7 +29,7 @@ class DBManager:
         self.conn = None
         self.cursor = None
 
-    def DBconnet(self):
+    def DBconnect(self):
         try:
             self.conn = mysql.connector.connect(
                 host = self.host,
