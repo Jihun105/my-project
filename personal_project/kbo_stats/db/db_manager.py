@@ -39,7 +39,7 @@ class DBManager:
             )
             self.conn.cursor()
 
-            self.cursor.execut(
+            self.cursor.execute(
                 f"CREATE DATABASE IF NOT EXISTS {self.database}"
                 "CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
             )
@@ -73,7 +73,7 @@ class DBManager:
             print(f"조회 실패 : {e}")
             return False
     
-    def close(self):
+    def DBclose(self):
         if self.cursor:
             self.cursor.close()
         if self.conn:
