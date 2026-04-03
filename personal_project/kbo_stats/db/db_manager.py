@@ -37,10 +37,10 @@ class DBManager:
                 password = self.password,
                 port = self.port
             )
-            self.conn.cursor()
+            self.cursor = self.conn.cursor()
 
             self.cursor.execute(
-                f"CREATE DATABASE IF NOT EXISTS {self.database}"
+                f"CREATE DATABASE IF NOT EXISTS {self.database} "
                 "CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
             )
             self.cursor.execute(f"USE {self.database}")
@@ -56,10 +56,13 @@ class DBManager:
         INSERT / UPDATE / DELETE / CREATE 실행
         """
         try:
-            self.cursor.execute(query, params)
+            if params:
+                self.cursor.execute(query, params)
+            else:
+                self.cursor.execute(query)
             self.conn.commit()
             return True
-        except Exception as e:
+        except Error as e:
             print(f"실행 실패 : {e}")
             self.conn.rollback()
             return False
@@ -68,6 +71,7 @@ class DBManager:
         try:
             self.cursor.execute(query, params)
             result = self.cursor.fetchall()
+            self.conn.commit()
             return result
         except Exception as e:
             print(f"조회 실패 : {e}")
@@ -79,3 +83,4 @@ class DBManager:
         if self.conn:
             self.conn.close()
         print("연결 종료")
+
