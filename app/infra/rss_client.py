@@ -1,3 +1,4 @@
+# RSS에서 뉴스 가져오기 
 import feedparser
 import httpx
 from datetime import datetime, timedelta
@@ -28,6 +29,7 @@ async def fetch_rss(url: str) -> list[dict]:
         published = entry.get("published_parsed")
         if published:
             published_dt = datetime(*published[:6])
+            # 날짜 데이터를 datetime 객체로 만듬
             if published_dt < cutoff:
                 continue
 
