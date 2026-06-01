@@ -26,7 +26,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    # 다른 주소에서 이 API를 호출할 수 있게 허용
+    # 프론트엔드(예: React, Vue, Next.js 등)가 다른 도메인(또는 포트)에서 이 API를 호출할 수 있도록 허용
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],

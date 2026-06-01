@@ -72,7 +72,7 @@ def classify_sector(keywords: list[str]) -> str:
     return best_sector
 
 
-async def analyze_trends(n_clusters: int = 5) -> dict:
+async def analyze_trends(n_clusters: int = None) -> dict:
     """저장된 뉴스를 클러스터링해서 트렌드 분석"""
 
     collection = get_news_collection()
@@ -87,6 +87,18 @@ async def analyze_trends(n_clusters: int = 5) -> dict:
     embeddings = np.array(results["embeddings"])
     metadatas = results["metadatas"]
     documents = results["documents"]
+
+    # 뉴스가 클러스터 수보다 적으면 클러스터 수 조정
+    # 뉴스 양에 따라 클러스터 수 동적 조정
+    if n_clusters is None:
+        if len(embeddings) < 20:
+            n_clusters = 3
+        elif len(embeddings) < 50:
+            n_clusters = 5
+        elif len(embeddings) < 100:
+            n_clusters = 8
+        else:
+            n_clusters = 12
 
     # 뉴스가 클러스터 수보다 적으면 클러스터 수 조정
     n_clusters = min(n_clusters, len(embeddings))
@@ -128,6 +140,12 @@ async def analyze_trends(n_clusters: int = 5) -> dict:
             "sector": sector,
             # 클러스터 대표 뉴스 제목 (첫 번째 뉴스)
             "label": articles[0]["metadata"].get("title", ""),
+            # 클러스터 내 상위 10개 뉴스 제목 목록
+            "top_titles": [
+                a["metadata"].get("title", "")
+                for a in articles[:10]
+                if a["metadata"].get("title", "")
+            ],
         })
 
     # 뉴스 많은 순으로 정렬

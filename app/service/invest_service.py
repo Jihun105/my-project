@@ -88,5 +88,8 @@ def _format_trend_for_llm(trend_data: dict) -> str:
             f"뉴스 {cluster['news_count']}건 | "
             f"키워드: {', '.join(cluster['top_keywords'])}"
         )
+        # 실제 뉴스 제목 목록 추가
+        for title in cluster.get("top_titles", []):
+            lines.append(f"  - {title}")
 
     return "\n".join(lines)
