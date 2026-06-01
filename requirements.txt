@@ -10,7 +10,7 @@ sentence-transformers
 kiwipiepy
 chromadb
 yfinance
-pykrx
+finance-datareader
 pandas
 diskcache
 pydantic
